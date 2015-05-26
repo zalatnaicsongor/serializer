@@ -101,8 +101,10 @@ abstract class GenericSerializationVisitor extends AbstractVisitor
         foreach ($data as $k => $v) {
             $v = $this->navigator->accept($v, $this->getElementType($type), $context);
 
-            if (null === $v && ( ! is_string($k) || ! $context->shouldSerializeNull())) {
-                continue;
+            if (count($type['params']) == 1) {
+                if (null === $v && ( ! is_string($k) || ! $context->shouldSerializeNull())) {
+                    continue;
+                }
             }
 
             $rs[$k] = $v;
